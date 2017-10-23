@@ -6,6 +6,7 @@
  *    Dieter Vandroemme
  */
 using Newtonsoft.Json;
+using RandomUtils.Log;
 using System;
 using System.Net.Sockets;
 using System.Timers;
@@ -28,17 +29,20 @@ namespace vApus_wmi_net {
                 SocketHelper.Write(_client, WmiHelper.RefreshValues(_wiwEntities));
             }
             catch (Exception ex) {
+                if (_client.Connected) {
+                    _client.Close();
+                    if (Server.Running)
+                        Loggers.Log(Level.Error, "Failed sending monitor counters.", ex);
+                }
             }
         }
-        
+
         /// <summary>
         /// Sets the wiw.
         /// </summary>
         /// <param name="wiw">The wiw as json.</param>
-        internal void SetWIW(string wiw) {
-            _wiwEntities = JsonConvert.DeserializeObject<Entities>(wiw);
-        }
-        
+        internal void SetWIW(string wiw) { _wiwEntities = JsonConvert.DeserializeObject<Entities>(wiw); }
+
         public void Start() { _timer.Start(); }
         public void Stop() { _timer.Stop(); }
     }

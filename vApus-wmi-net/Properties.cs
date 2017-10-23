@@ -5,13 +5,18 @@
  * Author(s):
  *    Dieter Vandroemme
  */
+using RandomUtils.Log;
+using System;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
 
 namespace vApus_wmi_net {
     internal class Properties {
         private static Properties _instance = new Properties();
         private string _name, _version, _copyright;
+        private int _port = -1;
+        private const int DEFAULTPORT = 5556;
 
         private Properties() { }
 
@@ -49,7 +54,30 @@ namespace vApus_wmi_net {
                 return _copyright;
             }
         }
-        public int Port { get { return 5556; } }
+        public int Port {
+            get {
+                if (_port == -1) {
+                    try {
+                        string propertiesfile = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "vApus-agent.properties");
+                        if (File.Exists(propertiesfile)) 
+                            using (var sr = new StreamReader(propertiesfile)) 
+                                while (sr.Peek() != -1) {
+                                    string line = sr.ReadLine();
+                                    if (line.StartsWith("port ", System.StringComparison.InvariantCultureIgnoreCase)) {
+                                        if (!int.TryParse(line.Substring("port ".Length).Trim(), out _port))
+                                            _port = DEFAULTPORT;
+                                        break;
+                                    }
+                                }                            
+                    }
+                    catch (Exception ex) {
+                        _port = DEFAULTPORT;
+                        Loggers.Log(Level.Error, "Failed reasding the port from the properties file. Reverting to the default TCP port 5556.", ex);
+                    }
+                }
+                return _port;
+            }
+        }
         /// <summary>
         /// In ms.
         /// </summary>

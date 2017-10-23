@@ -158,7 +158,7 @@ namespace WMI {
                 counters = instance == null ? category.GetCounters() : category.GetCounters(instance);
                 Array.Sort(counters, PerformanceCounterComparer.GetInstance());
             }
-            catch (Exception ex) {
+            catch {
                 //Temp counter
             }
             return counters;

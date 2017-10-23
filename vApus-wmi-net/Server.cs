@@ -5,7 +5,6 @@
  * Author(s):
  *    Dieter Vandroemme
  */
-using RandomUtils;
 using RandomUtils.Log;
 using System;
 using System.Net;
@@ -105,7 +104,6 @@ namespace vApus_wmi_net {
                         _monitor.Stop();
                         message = "200";
                         SocketHelper.Write(client, "200");
-
                         client.Close();
                         break;
                     default:
@@ -122,8 +120,11 @@ namespace vApus_wmi_net {
                 SocketHelper.Write(client, message);
             }
             catch (Exception ex) {
-                client.Close();
-                Loggers.Log(Level.Error, "Failed to handle the received request.", ex);
+                if (client.Connected) {
+                    client.Close();
+                    if (Running)
+                        Loggers.Log(Level.Error, "Failed to handle the received request.", ex);
+                }
             }
         }
     }
