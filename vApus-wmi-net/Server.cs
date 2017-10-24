@@ -21,7 +21,10 @@ namespace vApus_wmi_net {
         [ThreadStatic]
         private static Monitor _monitor;
 
-        public static bool Running { get => _running; set => _running = value; }
+        public static bool Running {
+            get { return _running; }
+            set { _running = value; }
+        }
 
         public static void Start() {
             try {
