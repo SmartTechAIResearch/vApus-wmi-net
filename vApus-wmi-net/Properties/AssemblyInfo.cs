@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WMI Agent")]
 [assembly: AssemblyDescription("A WMI agent implementation having 5556 for a default port to connect to.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Howest Sizing Servers Lab")]
+[assembly: AssemblyCompany("Sizing Servers Lab, affiliated with IT bachelor degree NMCT at University College of West-Flanders, Department GKG (www.sizingservers.be, www.nmct.be, www.howest.be/en) (www.sizingservers.be, www.nmct.be, www.howest.be/en)")]
 [assembly: AssemblyProduct("vApus-wmi-net")]
-[assembly: AssemblyCopyright("Copyright 2017 (c) Sizing Servers Lab, University College of West-Flanders, Department GKG")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

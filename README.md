@@ -1,5 +1,5 @@
-Like vApus-wmi but strictly in dotnet 4.5 instead of java 6 with a bridge to dotnet for accessing Windows Instrumentation. This is in fact a replacement for vApus-wmi --> too much problems.
+A WMI agent written in C# (dotnet 4.5). Bypasses all remote WMI problems. Listens to TCP port 5556 (can be set in the file vApus-agent.properties).
 
-Not derived from the vApus-agent base classes, since those are java, but simular to it and uses the same communication protocol. See the vApus-agent readme for a description of that.
+Not derived from the vApus-agent base classes, since those are Java (and Java bridges to dotnet == evil), but similar to it and uses the same communication protocol. See the vApus-agent readme for a description of that.
 
 The AssemblyFileVersion should be updated each time a new version is released.
